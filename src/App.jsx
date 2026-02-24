@@ -5,12 +5,14 @@ import CardGridContainer from './components/CardGrid'
 import SwipeCardsContainer from './components/SwipeCards'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import ScrollHero from './components/new'
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-{/* <Header /> */}
+    {/* <ScrollHero /> */}
+<Header />
 <Hero />
 <SwipeCardsContainer />
 <CardGridContainer />

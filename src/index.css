@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+@theme {
+  --breakpoint-ms: 818px;
+}
 /* Keep your other custom CSS below this line */
 body {
   margin: 0;

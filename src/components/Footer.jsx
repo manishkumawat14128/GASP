@@ -1,132 +1,360 @@
 export default function Footer() {
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return (
     <>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;500&family=Barlow+Condensed:wght@300;600;900&display=swap');
+
+        :root {
+          --bg:     #0c0b09;
+          --amber:  #f59e0b;
+          --bone:   #e8e0d0;
+          --muted:  #6b6560;
+          --dim:    #2a2722;
+          --border: rgba(255,255,255,0.06);
+        }
+
         .footer-root {
-          background-color: #020205;
-          border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .footer-title {
-          font-family: 'Syncopate', sans-serif;
-          font-size: clamp(1rem, 5vw, 12rem);
-          font-weight: 700;
-          letter-spacing: -0.05em;
-          line-height: 0.8;
-          /* Shiny metal effect */
-          background: linear-gradient(180deg, #fff 0%, #333 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          background: var(--bg);
+          border-top: 1px solid rgba(245,158,11,0.12);
           position: relative;
+          overflow: hidden;
+          font-family: 'Barlow Condensed', sans-serif;
         }
 
-        /* Light sweep effect across the big text */
-        .footer-title::after {
-          content: 'ITZFIZZ';
+        /* Top amber glow line */
+        .footer-glow-line {
           position: absolute;
-          left: 0; top: 0;
-          width: 100%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(0,242,255,0.2), transparent);
-          background-size: 200% 100%;
-          -webkit-background-clip: text;
-          animation: sweep 6s linear infinite;
+          top: 0; left: 50%;
+          transform: translateX(-50%);
+          width: 60%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(245,158,11,0.5), transparent);
+          pointer-events: none;
         }
 
+        /* Ambient orb */
+        .footer-orb {
+          position: absolute;
+          width: clamp(300px, 50vw, 600px);
+          height: clamp(300px, 50vw, 600px);
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 70%);
+          bottom: -20%;
+          left: 50%;
+          transform: translateX(-50%);
+          filter: blur(80px);
+          pointer-events: none;
+        }
+
+        /* Scanlines */
+        .footer-scan {
+          position: absolute; inset: 0;
+          background: repeating-linear-gradient(
+            180deg,
+            transparent,
+            transparent 3px,
+            rgba(0,0,0,0.08) 3px,
+            rgba(0,0,0,0.08) 4px
+          );
+          pointer-events: none;
+          opacity: 0.4;
+        }
+
+        .footer-inner {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 48px) clamp(28px, 4vw, 48px);
+          position: relative;
+          z-index: 10;
+        }
+
+        /* ── Top grid ── */
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 1.6fr 1fr 1fr 1fr;
+          gap: clamp(24px, 4vw, 56px);
+          padding-bottom: clamp(40px, 6vw, 72px);
+          border-bottom: 1px solid var(--border);
+        }
+        @media (max-width: 768px) {
+          .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 36px; }
+        }
+        @media (max-width: 420px) {
+          .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Brand col */
+        .brand-logo {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 28px;
+          letter-spacing: 0.06em;
+          color: var(--bone);
+          text-shadow: 0 0 20px rgba(245,158,11,0.2);
+          margin-bottom: 14px;
+          display: block;
+        }
+        .brand-logo span { color: var(--amber); }
+        .brand-tagline {
+          font-family: 'DM Mono', monospace;
+          font-size: clamp(8px, 1.2vw, 10px);
+          font-weight: 300;
+          text-transform: uppercase;
+          letter-spacing: 0.3em;
+          color: var(--muted);
+          line-height: 1.9;
+        }
+
+        /* Link columns */
+        .link-col h4 {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.5em;
+          color: var(--dim);
+          margin-bottom: 18px;
+        }
+        .link-col {
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+        .footer-link {
+          font-family: 'DM Mono', monospace;
+          font-size: clamp(9px, 1.3vw, 11px);
+          font-weight: 300;
+          text-transform: uppercase;
+          letter-spacing: 0.25em;
+          color: var(--muted);
+          text-decoration: none;
+          padding: 7px 0;
+          border-bottom: 1px solid transparent;
+          transition: color 0.25s ease, border-color 0.25s ease, padding-left 0.25s ease;
+          display: inline-block;
+          cursor: pointer;
+        }
+        .footer-link:hover {
+          color: var(--amber);
+          padding-left: 6px;
+          border-bottom-color: rgba(245,158,11,0.2);
+        }
+
+        /* Email link special */
+        .footer-email {
+          font-family: 'DM Mono', monospace;
+          font-size: clamp(9px, 1.3vw, 11px);
+          font-weight: 300;
+          letter-spacing: 0.15em;
+          color: var(--muted);
+          text-decoration: none;
+          display: inline-block;
+          padding: 7px 0;
+          transition: color 0.25s ease;
+          cursor: pointer;
+        }
+        .footer-email:hover { color: var(--amber); }
+
+        .footer-coords {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px;
+          font-weight: 300;
+          color: #3d3a35;
+          letter-spacing: 0.1em;
+          margin-top: 16px;
+          line-height: 1.8;
+        }
+
+        /* ── Big title ── */
+        .footer-title-wrap {
+          padding: clamp(32px, 5vw, 56px) 0 clamp(24px, 4vw, 40px);
+          border-bottom: 1px solid var(--border);
+          position: relative;
+          overflow: hidden;
+        }
+        .footer-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(4rem, 20vw, 16rem);
+          line-height: 0.82;
+          letter-spacing: 0.02em;
+          color: transparent;
+          -webkit-text-stroke: 1px rgba(232,224,208,0.08);
+          position: relative;
+          user-select: none;
+        }
+        .footer-title-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent 0%, rgba(245,158,11,0.06) 50%, transparent 100%);
+          background-size: 200% 100%;
+          animation: sweep 8s linear infinite;
+          pointer-events: none;
+        }
         @keyframes sweep {
-          0% { background-position: -200% 0; }
+          0%   { background-position: -200% 0; }
           100% { background-position: 200% 0; }
         }
 
-        .link-group a {
-          font-size: 0.65rem;
-          font-weight: 700;
+        /* ── Bottom bar ── */
+        .footer-bottom {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-top: clamp(20px, 3vw, 32px);
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+
+        .status-pill {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          border: 1px solid rgba(245,158,11,0.15);
+          border-radius: 100px;
+          padding: 6px 14px;
+          background: rgba(245,158,11,0.04);
+        }
+        .status-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: var(--amber);
+          box-shadow: 0 0 8px var(--amber);
+          animation: dotPulse 2s ease-in-out infinite;
+          flex-shrink: 0;
+        }
+        @keyframes dotPulse {
+          0%,100% { opacity:1; box-shadow:0 0 8px var(--amber); }
+          50%      { opacity:0.4; box-shadow:0 0 3px var(--amber); }
+        }
+        .status-text {
+          font-family: 'DM Mono', monospace;
+          font-size: clamp(8px,1.2vw,9px);
+          font-weight: 300;
+          text-transform: uppercase;
+          letter-spacing: 0.35em;
+          color: var(--muted);
+        }
+
+        .bottom-right {
+          display: flex;
+          align-items: center;
+          gap: clamp(16px, 3vw, 36px);
+        }
+        .bottom-copy {
+          font-family: 'DM Mono', monospace;
+          font-size: clamp(8px,1.2vw,9px);
+          font-weight: 300;
           text-transform: uppercase;
           letter-spacing: 0.3em;
-          color: #555;
-          transition: all 0.3s ease;
+          color: #3d3a35;
         }
-
-        .link-group a:hover {
-          color: #00f2ff;
-          letter-spacing: 0.4em;
-          transform: translateX(5px);
+        .back-top {
+          font-family: 'DM Mono', monospace;
+          font-size: clamp(8px,1.2vw,9px);
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.3em;
+          color: var(--muted);
+          cursor: pointer;
+          transition: color 0.25s ease;
+          background: none;
+          border: none;
+          padding: 0;
         }
+        .back-top:hover { color: var(--amber); }
 
-        .status-dot {
-          width: 6px;
-          height: 6px;
-          background: #00f2ff;
-          border-radius: 50%;
-          box-shadow: 0 0 10px #00f2ff;
-          animation: pulse 2s infinite;
+        /* Divider tick */
+        .col-tick {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 18px;
         }
-
-        @keyframes pulse {
-          0% { opacity: 0.4; }
-          50% { opacity: 1; }
-          100% { opacity: 0.4; }
+        .tick-line {
+          width: 20px;
+          height: 1px;
+          background: rgba(245,158,11,0.35);
         }
       `}</style>
 
-      <footer className="footer-root relative pt-32 pb-12 px-10 overflow-hidden">
-        {/* Background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-cyan-500/50 to-transparent" />
+      <footer className="footer-root">
+        <div className="footer-glow-line" />
+        <div className="footer-orb" />
+        <div className="footer-scan" />
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          
-          {/* Main Navigation Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
-            <div className="col-span-1 md:col-span-1">
-              <p className="text-white font-black text-xl mb-4 italic">iF.</p>
-              <p className="text-zinc-600 text-[10px] leading-relaxed tracking-widest uppercase">
-                Engineering digital <br/> supremacy since 2024.
+        <div className="footer-inner">
+
+          {/* Grid */}
+          <div className="footer-grid">
+
+            {/* Brand */}
+            <div>
+              <span className="brand-logo">iTZFi<span>ZZ</span></span>
+              <p className="brand-tagline">
+                Engineering digital<br />supremacy since 2024.
               </p>
             </div>
 
-            <div className="link-group flex flex-col gap-4">
-              <h4 className="text-[9px] text-zinc-800 font-bold uppercase tracking-[0.5em] mb-2">Navigation</h4>
-              <a href="#">Engine</a>
-              <a href="#">Interface</a>
-              <a href="#">Security</a>
+            {/* Navigation */}
+            <div className="link-col">
+              <div className="col-tick">
+                <div className="tick-line" />
+                <h4>Navigation</h4>
+              </div>
+              {["Engine", "Interface", "Security", "Services"].map(l => (
+                <a key={l} className="footer-link">{l}</a>
+              ))}
             </div>
 
-            <div className="link-group flex flex-col gap-4">
-              <h4 className="text-[9px] text-zinc-800 font-bold uppercase tracking-[0.5em] mb-2">Connect</h4>
-              <a href="#">Instagram</a>
-              <a href="#">LinkedIn</a>
-              <a href="#">Twitter/X</a>
+            {/* Connect */}
+            <div className="link-col">
+              <div className="col-tick">
+                <div className="tick-line" />
+                <h4>Connect</h4>
+              </div>
+              {["Instagram", "LinkedIn", "Twitter / X", "Dribbble"].map(l => (
+                <a key={l} className="footer-link">{l}</a>
+              ))}
             </div>
 
-            <div className="link-group flex flex-col gap-4 md:items-end">
-              <h4 className="text-[9px] text-zinc-800 font-bold uppercase tracking-[0.5em] mb-2 text-right">Inquiries</h4>
-              <a href="mailto:hello@itzfizz.com">hello@itzfizz.com</a>
-              <p className="text-[10px] text-zinc-700 font-mono mt-4">N 40.7128 / W 74.0060</p>
+            {/* Inquiries */}
+            <div className="link-col">
+              <div className="col-tick">
+                <div className="tick-line" />
+                <h4>Inquiries</h4>
+              </div>
+              <a href="mailto:hello@itzfizz.com" className="footer-email">
+                hello@itzfizz.com
+              </a>
+              <p className="footer-coords">
+                N 40.7128°<br />W 74.0060°
+              </p>
             </div>
+
           </div>
 
-          {/* Large Hero Title */}
-          <div className="mb-12">
+          {/* Big title */}
+          <div className="footer-title-wrap">
             <h2 className="footer-title">ITZFIZZ</h2>
+            <div className="footer-title-overlay" />
           </div>
 
-          {/* Bottom Bar */}
-          <div className="flex flex-col md:flex-row items-center justify-between pt-10 border-t border-white/5">
-            <div className="flex items-center gap-4 mb-4 md:mb-0">
+          {/* Bottom bar */}
+          <div className="footer-bottom">
+            <div className="status-pill">
               <div className="status-dot" />
-              <span className="text-[9px] uppercase tracking-[0.4em] text-zinc-500">
-                All Systems Operational
-              </span>
+              <span className="status-text">All Systems Operational</span>
             </div>
 
-            <div className="flex gap-10">
-              <span className="text-[9px] uppercase tracking-[0.4em] text-zinc-700 font-bold">
-                © 2024 ITZFIZZ Labs
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.4em] text-zinc-700 font-bold hover:text-white cursor-pointer transition-colors">
+            <div className="bottom-right">
+              <span className="bottom-copy">© 2024 ITZFIZZ Labs</span>
+              <button className="back-top" onClick={scrollToTop}>
                 Back to top ↑
-              </span>
+              </button>
             </div>
           </div>
+
         </div>
       </footer>
     </>
