@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Keep your other custom CSS below this line */
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background-color: black;
+}
+.outline-text {
+  -webkit-text-stroke: 1.5px black;
+  color: transparent;
+}
