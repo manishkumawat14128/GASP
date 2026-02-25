@@ -1,329 +1,24 @@
-// function BackgroundTextLayer({
-//   text = "CORE ENGINE / V.4029-B",
-//   opacity = 0.05,
-//   rotate = -45,
-//   fontSize = "14px",
-//   gap = "60px",
-//   speed = 40, // seconds
-// }) {
-//   const repeatedText = Array(100).fill(text).join("   ");
 
-//   return (
-//     <div
-//       className="absolute inset-0 overflow-hidden pointer-events-none select-none"
-//       style={{ opacity }}
-//     >
-//       <div
-//         className="absolute w-[200%] h-[200%] animate-scrollText"
-//         style={{
-//           transform: `rotate(${rotate}deg)`,
-//           top: "-50%",
-//           left: "-50%",
-//           animationDuration: `${speed}s`,
-//         }}
-//       >
-//         {Array(window.innerWidth < 640 ? 10 : 20).fill(0).map((_, i) => (
-//           <p
-//             key={i}
-//             className="whitespace-nowrap uppercase font-bold text-white"
-//             style={{
-//               fontSize,
-//               marginBottom: gap,
-//               letterSpacing: "0.5em",
-//             }}
-//           >
-//             {repeatedText}
-//           </p>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
+import { useEffect, useState, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-
-
-// export default function HeroV2() {
-//   const cards = [
-//     { title: "Efficiency", rate: "Optimal", percentage: 98, color: "#00f2ff" },
-//     { title: "Performance", rate: "Ultra", percentage: 94, color: "#7000ff" },
-//     { title: "Stability", rate: "Solid", percentage: 100, color: "#ffcc00" },
-//   ];
-
-//   return (
-//     <>
-//       <style>{`
-//         @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap');
-
-//         :root {
-//           --primary: #00f2ff;
-//           --secondary: #7000ff;
-//           --accent: #ffcc00;
-//           --bg: #020205;
-//         }
-
-//         .hero-container {
-//           background-color: var(--bg);
-//           font-family: 'Inter', sans-serif;
-//           color: white;
-//           perspective: 1000px;
-//         }
-
-//         /* Animated Nebula Background */
-//         .nebula {
-//           position: absolute;
-//           width: 100%;
-//           height: 100%;
-//           background: 
-//             radial-gradient(circle at 20% 30%, rgba(0, 242, 255, 0.15) 0%, transparent 40%),
-//             radial-gradient(circle at 80% 70%, rgba(112, 0, 255, 0.15) 0%, transparent 40%);
-//           filter: blur(100px);
-//           animation: floatNebula 20s ease-in-out infinite alternate;
-//         }
-
-//         @keyframes floatNebula {
-//           from { transform: scale(1) translate(0, 0); }
-//           to { transform: scale(1.2) translate(5%, 5%); }
-//         }
-
-
-// @keyframes scrollText {
-//   from {
-//     transform: translateX(0) rotate(-45deg);
-//   }
-//   to {
-//     transform: translateX(-50%) rotate(-45deg);
-//   }
-
-// }
-
-// .animate-scrollText {
-//   animation: scrollText linear infinite;
-// }
-
-//         /* 3D Moving Floor */
-//         .floor {
-//           position: absolute;
-//           width: 200%;
-//           height: 100%;
-//           bottom: -20%;
-//           left: -50%;
-//           background-image: 
-//             linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-//             linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-//           background-size: 80px 80px;
-//           transform: rotateX(75deg);
-//           mask-image: linear-gradient(to top, rgba(0,0,0,1), transparent);
-//           animation: floorMove 10s linear infinite;
-//         }
-
-//         @keyframes floorMove {
-//           0% { background-position: 0 0; }
-//           100% { background-position: 0 80px; }
-//         }
-
-//         /* Title Styling with Gradient Mask */
-//         .main-title {
-//           font-family: 'Syncopate', sans-serif;
-//           font-size: clamp(2rem, 12vw, 10rem);
-//           font-weight: 700;
-//           text-align: center;
-//           line-height: 0.9;
-//           letter-spacing: -0.05em;
-//           background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.1) 100%);
-//           -webkit-background-clip: text;
-//           -webkit-text-fill-color: transparent;
-//           filter: drop-shadow(0 0 30px rgba(0, 242, 255, 0.3));
-//           animation: titleEntrance 1.5s cubic-bezier(0.2, 0, 0.2, 1) both;
-//         }
-
-//         @keyframes titleEntrance {
-//           0% { opacity: 0; transform: translateY(100px) rotateX(-30deg); filter: blur(20px); }
-//           100% { opacity: 1; transform: translateY(0) rotateX(0); filter: blur(0); }
-//         }
-
-//         /* Glassmorphism Stat Cards */
-//         .glass-card {
-//           background: rgba(255, 255, 255, 0.03);
-//           backdrop-filter: blur(10px);
-//           border: 1px solid rgba(255, 255, 255, 0.1);
-//           padding: 30px;
-//           border-radius: 24px;
-//           width: 100%;
-//           min-width: 260px;
-//           transition: all 0.4s ease;
-//           position: relative;
-//           overflow: hidden;
-//         }
-
-//         .glass-card:hover {
-//           background: rgba(255, 255, 255, 0.06);
-//           border-color: var(--primary);
-//           transform: translateY(-10px) scale(1.02);
-//         }
-
-//         .progress-circle {
-//           width: 50px;
-//           height: 50px;
-//           border-radius: 50%;
-//           border: 2px solid rgba(255,255,255,0.1);
-//           display: flex;
-//           align-items: center;
-//           justify-content: center;
-//           font-size: 0.7rem;
-//           font-weight: 900;
-//           margin-bottom: 20px;
-//           position: relative;
-//         }
-
-//         .progress-circle::after {
-//           content: '';
-//           position: absolute;
-//           inset: -2px;
-//           border-radius: 50%;
-//           border: 2px solid var(--clr);
-//           clip-path: polygon(0 0, 100% 0, 100% var(--p), 0 var(--p));
-//         }
-
-//         .btn-modern {
-//           background: white;
-//           color: black;
-//           padding: 18px 45px;
-//           border-radius: 100px;
-//           font-weight: 900;
-//           text-transform: uppercase;
-//           letter-spacing: 0.2em;
-//           font-size: 0.75rem;
-//           margin-top: 50px;
-//           cursor: pointer;
-//           border: none;
-//           display: flex;
-//           align-items: center;
-//           gap: 15px;
-//           transition: all 0.3s ease;
-//         }
-
-//         .btn-modern:hover {
-//           gap: 25px;
-//           background: var(--primary);
-//           box-shadow: 0 0 40px rgba(0, 242, 255, 0.5);
-//         }
-
-//         .scanning-line {
-//           position: absolute;
-//           width: 100%;
-//           height: 2px;
-//           background: linear-gradient(90deg, transparent, var(--primary), transparent);
-//           top: 0;
-//           animation: scanMove 4s linear infinite;
-//           opacity: 0.5;
-//         }
-
-//         @keyframes scanMove {
-//           0% { top: 0; }
-//           100% { top: 100%; }
-//         }
-//       `}</style>
-
-//       {/* <section className="hero-container relative min-h-screen pt-40 md w-full flex flex-col items-center justify-center overflow-hidden"> */}
-//       <section className="hero-container relative min-h-screen w-full flex flex-col items-center justify-center px-3 pt-32 md:pt-70 overflow-hidden">
-//         {/* Background Layers */}
-//         <div className="nebula" />
-//         <div className="floor" />
-//         <div className="scanning-line" />
-
-//         <BackgroundTextLayer
-//           text="CORE ENGINE / V.4029-B"
-//           opacity={0.04}
-//           rotate={-45}
-//           fontSize="12px"
-//           gap="80px"
-//         />
-
-//         {/* Main Content */}
-//         <div className="relative z-20 flex flex-col items">
-//           {/* HUD Elements (Top) */}
-//           <div className="flex items-center justify-start gap-4 z-20 mb-10">
-//             <div className=" flex items-center gap-4">
-//               <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_10px_#22d3ee]" />
-//               <span className="text-[10px] uppercase tracking-[0.5em] text-zinc-500 font-bold">Protocol Active</span>
-//             </div>
-//           </div>
-//           <h1 className="main-title">ITZFIZZ</h1>
-
-//           <p className="mt-6 text-zinc-400 uppercase tracking-[0.4em] md:tracking-[0.8em] text-[10px] md:text-[11px] font-medium text-center">
-//             {/* <p className="mt-6 text-zinc-400 uppercase tracking-[0.8em] text-[11px] font-medium"> */}
-//             Engineering <span className="text-cyan-400">Superior</span> Intelligence
-//           </p>
-
-//           {/* HUD Elements (Top) */}
-//           <div className="flex items-end justify-end pt-10 gap-4 z-20 mb-10">
-
-//             <div className="flex flex-col items-end align-sub ">
-//               <span className="text-[10px] uppercase tracking-[0.5em] text-zinc-500 font-bold">Security Level: High</span>
-//               <div className="w-32 h-px bg-zinc-800 mt-2">
-//                 <div className="w-3/4 h-full bg-cyan-500 shadow-[0_0_5px_#22d3ee]" />
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Stat Cards */}
-//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap justify-center gap-6 mt-12 md:mt-16 px-4">
-//             {/* <div className="flex flex-wrap justify-center gap-6 mt-16 px-6"> */}
-//             {cards.map(({ title, rate, percentage, color }) => (
-//               <div key={title} className="glass-card group" style={{ "--clr": color, "--p": `${percentage}%` }}>
-//                 <div className="progress-circle" style={{ color: color }}>
-//                   {percentage}%
-//                 </div>
-//                 <h3 className="text-zinc-500 uppercase tracking-widest text-[10px] font-bold mb-1">
-//                   {title}
-//                 </h3>
-//                 <p className="text-xl font-black uppercase italic group-hover:text-cyan-400 transition-colors">
-//                   {rate}
-//                 </p>
-//               </div>
-//             ))}
-//           </div>
-
-//         </div>
-
-//         {/* Side Text Decors */}
-//         <div className="absolute left-6 top-120 -translate-y-1/2 -rotate-90 origin-left">
-//           <span className="text-[9px] uppercase tracking-[1em] text-zinc-700 font-bold">
-//             Core Engine / v.4029-B
-//           </span>
-//         </div>
-
-//         <div className="absolute right-6 top-140 translate-y-1/2 rotate-90 origin-right">
-//           <span className="text-[9px] uppercase tracking-[1em] text-zinc-700 font-bold">
-//             Neural Network Synchronized
-//           </span>
-//         </div>
-
-//         {/* Bottom Corner Info */}
-//         <div className="absolute bottom-10 left-10 text-left">
-//           <p className="text-[9px] text-zinc-600 uppercase tracking-widest leading-relaxed">
-//             Process ID: #7729-00<br />
-//             Status: Synced
-//           </p>
-//         </div>
-//       </section>
-//     </>
-//   );
-// }\\
-
-import { useEffect, useState } from "react";
+gsap.registerPlugin(ScrollTrigger);
 
 function BackgroundTextLayer({ text = "CORE ENGINE / V.4029-B", opacity = 0.04, speed = 55 }) {
-  const repeatedText = Array(60).fill(text).join("   ");
+  const repeatedText = Array(60).fill(text).join("   ");
   const [rows, setRows] = useState(18);
+  const bgRef = useRef(null);
+  
   useEffect(() => {
     const update = () => setRows(window.innerWidth < 640 ? 8 : 18);
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+  
   return (
-    <div style={{ position:"absolute", inset:0, overflow:"hidden", pointerEvents:"none", userSelect:"none", opacity }}>
+    <div ref={bgRef} style={{ position:"absolute", inset:0, overflow:"hidden", pointerEvents:"none", userSelect:"none", opacity }}>
       <div style={{ position:"absolute", width:"220%", height:"220%", top:"-60%", left:"-60%", animation:`scrollText ${speed}s linear infinite` }}>
         {Array(rows).fill(0).map((_, i) => (
           <p key={i} style={{ whiteSpace:"nowrap", textTransform:"uppercase", fontFamily:"'DM Mono', monospace", fontSize:"clamp(9px,1.2vw,13px)", letterSpacing:"0.4em", color:"#e8e0d0", marginBottom:"clamp(48px,6vw,80px)", fontWeight:300 }}>
@@ -377,6 +72,91 @@ export default function HeroV2() {
     { title: "Performance", rate: "Ultra",   percentage: 94,  color: "#e11d48" },
     { title: "Stability",   rate: "Solid",   percentage: 100, color: "#10b981" },
   ];
+
+  const heroRef = useRef(null);
+  const hudRef = useRef(null);
+  const titleRef = useRef(null);
+  const cardsRef = useRef(null);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    // 🔥 PAGE LOAD ANIMATIONS (staggered reveal)
+    
+    // 1. Hero container fade-in
+    gsap.fromTo(heroRef.current,
+      { opacity: 0, scale: 0.98 },
+      { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" }
+    );
+
+    // 2. HUD elements stagger (0.5s delay)
+    gsap.fromTo(".hud-pill, .version-badge",
+      { opacity: 0, y: 40, scale: 0.8 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.15, ease: "back.out(1.7)", delay: 0.5 }
+    );
+
+    // 3. Main title stagger reveal (1.2s delay)
+    gsap.fromTo(titleRef.current || ".main-title",
+      { opacity: 0, y: 60, rotationX: -45 },
+      { opacity: 1, y: 0, rotationX: 0, duration: 1.2, ease: "back.out(1.7)", delay: 1.2 }
+    );
+
+    // 4. Stats cards bounce in one-by-one (2s delay)
+    gsap.fromTo(".stat-card",
+      { opacity: 0, scale: 0.3, y: 80 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.9, stagger: 0.2, ease: "elastic.out(1, 0.4)", delay: 2.0 }
+    );
+
+    // 🔥 SCROLL TRIGGER ANIMATIONS (CORE ASSIGNMENT FEATURE)
+    
+    // Title parallax scroll
+    ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: "top top",
+      end: "bottom top",
+      scrub: 1,
+      animation: gsap.to(".main-title", {
+        yPercent: -30,
+        scale: 0.92,
+        ease: "none"
+      })
+    });
+
+    // Cards scroll animation
+    ScrollTrigger.create({
+      trigger: cardsRef.current,
+      start: "top 80%",
+      end: "bottom 20%",
+      scrub: true,
+      animation: gsap.to(".stat-card", {
+        scale: 1.15,
+        rotateX: 8,
+        y: -20,
+        stagger: 0.05,
+        ease: "power2.out"
+      })
+    });
+
+    // Orbs parallax
+    ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: "top top",
+      end: "bottom top",
+      scrub: 1.5,
+      animation: gsap.to(".orb-left", { scale: 1.4, xPercent: -15 }),
+      animation2: gsap.to(".orb-right", { scale: 1.3, xPercent: 12 })
+    });
+
+    // Floor parallax
+    ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: "top top",
+      end: "bottom top",
+      scrub: 2,
+      animation: gsap.to(".floor", { yPercent: 40, rotation: 1 })
+    });
+
+    ScrollTrigger.refresh();
+  }, []);
 
   return (
     <>
@@ -626,27 +406,22 @@ export default function HeroV2() {
         }
       `}</style>
 
-      <section className="hero-root">
-        {/* Atmosphere */}
+      <section className="hero-root" ref={heroRef}>
+        {/* YOUR EXACT SAME CONTENT - NO CHANGES */}
         <div className="orb-left" />
         <div className="orb-right" />
         <div className="floor" />
         <div className="scan" />
         <BackgroundTextLayer />
 
-        {/* Corner ticks */}
         <div className="corner tl" /><div className="corner tr" />
         <div className="corner bl" /><div className="corner br" />
 
-        {/* Side rails */}
         <span className="side-rail left">Core Engine / v.4029-B</span>
         <span className="side-rail right">Neural Network Synchronized</span>
 
-        {/* Content */}
-        <div className="content">
-
-          {/* HUD bar */}
-          <div className="hud-bar">
+        <div className="content" ref={contentRef}>
+          <div className="hud-bar" ref={hudRef}>
             <div className="hud-pill">
               <div className="pulse-dot" />
               <span className="hud-text">Protocol Active</span>
@@ -659,32 +434,28 @@ export default function HeroV2() {
             </div>
           </div>
 
-          {/* Version badge */}
           <div className="version-badge">
             <div className="badge-dot" />
             <span>v.4029-B · System Online</span>
           </div>
 
-          {/* Title */}
-          <h1 className="main-title">ITZFIZZ</h1>
+          <h1 className="main-title" ref={titleRef}>
+            ITZFIZZ
+          </h1>
 
-          {/* Divider */}
           <div className="divider" />
 
-          {/* Subtitle */}
           <p className="subtitle">
             Engineering <em>Superior</em> Intelligence
           </p>
 
-          {/* Cards */}
-          <div className="cards-row">
+          <div className="cards-row" ref={cardsRef}>
             {cards.map(({ title, rate, percentage, color }, i) => (
               <StatCard key={title} title={title} rate={rate} percentage={percentage} color={color} index={i} />
             ))}
           </div>
         </div>
 
-        {/* Bottom meta */}
         <div className="bottom-meta"><p>Process ID: #7729-00<br />Status: Synced</p></div>
         <div className="bottom-right"><p>Lat 00°00′N<br />Lon 00°00′E</p></div>
       </section>
