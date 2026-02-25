@@ -11,12 +11,12 @@ function App() {
 
   return (
     <>
-    {/* <ScrollHero /> */}
-<Header />
+    <ScrollHero />
+{/* <Header />
 <Hero />
 <SwipeCardsContainer />
 <CardGridContainer />
-<Footer></Footer>
+<Footer></Footer> */}
     </>
   )
 }

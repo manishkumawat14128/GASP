@@ -171,6 +171,9 @@ export default function Footer() {
           padding: clamp(32px, 5vw, 56px) 0 clamp(24px, 4vw, 40px);
           border-bottom: 1px solid var(--border);
           position: relative;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
           overflow: hidden;
         }
         .footer-title {
@@ -178,10 +181,12 @@ export default function Footer() {
           font-size: clamp(4rem, 20vw, 16rem);
           line-height: 0.82;
           letter-spacing: 0.02em;
-          color: transparent;
+          color: rgba(232,224,208,0.12);
           -webkit-text-stroke: 1px rgba(232,224,208,0.08);
           position: relative;
           user-select: none;
+          padding-left: 20%;
+          padding-right: 20%;
         }
         .footer-title-overlay {
           position: absolute;
@@ -335,7 +340,7 @@ export default function Footer() {
           </div>
 
           {/* Big title */}
-          <div className="footer-title-wrap">
+          <div className="footer-title-wrap items-center">
             <h2 className="footer-title">ITZFIZZ</h2>
             <div className="footer-title-overlay" />
           </div>
