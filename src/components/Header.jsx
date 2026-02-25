@@ -306,8 +306,8 @@ export default function Header() {
             <div className="logo" ref={logoRef}>
               <span>W</span><span>E</span><span>L</span>  {/* WHITE */}
               <span className="yellow">C</span><span>O</span><span>M</span><span>E</span>  {/* YELLOW → WHITE */}
-              <span className="yellow">i</span><span>T</span><span>Z</span>  {/* YELLOW → WHITE */}
-              <span className="yellow">F</span><span>i</span><span>Z</span><span>Z</span>  {/* YELLOW → WHITE */}
+              {/* <span className="yellow">i</span><span>T</span><span>Z</span>  {/* YELLOW → WHITE */}
+              {/* <span className="yellow">F</span><span>i</span><span>Z</span><span>Z</span>  YELLOW → WHITE */} 
               <span className="logo-dot" />
             </div>
 
