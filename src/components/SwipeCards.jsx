@@ -28,7 +28,7 @@ function SwipeCard({ title, description, subText, btnText, gradient, accentColor
           align-items: stretch;
           overflow: hidden;
           transition: border-color 0.5s ease, transform 0.5s ease;
-          box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.03) inset;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset;
           cursor: pointer;
           will-change: transform;
         }
@@ -272,9 +272,9 @@ function SwipeCard({ title, description, subText, btnText, gradient, accentColor
           border: 1px solid rgba(255,255,255,0.06);
           transition: all 0.6s ease;
         }
-        .sc-ring-1 { inset: -20px; animation: orbitSpin 12s linear infinite; }
-        .sc-ring-2 { inset: -44px; border-style: dashed; animation: orbitSpin 20s linear infinite reverse; opacity: 0.5; }
-        .sc-ring-3 { inset: -70px; animation: orbitSpin 30s linear infinite; opacity: 0.25; }
+        .sc-ring-1 { inset: -20px; animation: orbitSpin 20s linear infinite; }
+        .sc-ring-2 { inset: -44px; border-style: dashed; animation: orbitSpin 30s linear infinite reverse; opacity: 0.5; }
+        .sc-ring-3 { inset: -70px; animation: orbitSpin 40s linear infinite; opacity: 0.25; }
         @keyframes orbitSpin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
@@ -425,7 +425,7 @@ function SwipeCard({ title, description, subText, btnText, gradient, accentColor
             <div className="sc-ring sc-ring-3" />
 
             <div className="sc-img-frame" style={{ 
-              boxShadow: `0 0 60px ${accentColor}25, 0 0 120px ${accentColor}10` 
+              boxShadow: `0 0 30px ${accentColor}25, 0 0 120px ${accentColor}10` 
             }}>
               <div style={{
                 position: 'absolute', inset: 0, borderRadius: '50%', zIndex: 3,
@@ -433,14 +433,14 @@ function SwipeCard({ title, description, subText, btnText, gradient, accentColor
                 mixBlendMode: 'screen'
               }} />
               <img 
-                src={`https://images.unsplash.com/photo-${['1551650975-87deedd944c3', '1518770660439-4636190af475', '1489389944381-3471b5b30f04'][index]}?w=600&h=600&fit=crop&q=85`} 
+                src={`https://images.unsplash.com/photo-${['1551650975-87deedd944c3', '1518770660439-4636190af475', '1489389944381-3471b5b30f04'][index]}?w=550&h=500&fit=crop&q=80`} 
                 className="sc-img" 
                 alt={title} 
               />
             </div>
 
             <div className="sc-icon-badge" style={{ 
-              boxShadow: `0 8px 32px rgba(0,0,0,0.6), 0 0 20px ${accentColor}30` 
+              boxShadow: `0 8px 20px rgba(0,0,0,0.6), 0 0 20px ${accentColor}30` 
             }}>
               {icon}
             </div>
@@ -469,7 +469,7 @@ export default function SwipeCardsContainer() {
         trigger: triggerRef.current,
         start: "top top",
         end: () => `+=${totalWidth}`,
-        scrub: 1.8,
+        scrub: .7,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
@@ -483,7 +483,7 @@ export default function SwipeCardsContainer() {
         trigger: triggerRef.current,
         start: "top bottom",
         end: "bottom top",
-        scrub: 2.5,
+        scrub: 0.8,
       }
     });
 
@@ -503,7 +503,7 @@ export default function SwipeCardsContainer() {
             trigger: triggerRef.current,
             start: "top 70%",
             end: "top 30%",
-            scrub: true,
+            scrub: .4,
           }
         }
       );

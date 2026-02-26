@@ -303,7 +303,7 @@ transform: translateZ(0);
         <div className="orb-right" />
         <div className="floor" />
         <div className="scan" />
-        <BackgroundTextLayer />
+        {/* <BackgroundTextLayer /> */}
 
         <div className="corner tl" /><div className="corner tr" />
         <div className="corner bl" /><div className="corner br" />
