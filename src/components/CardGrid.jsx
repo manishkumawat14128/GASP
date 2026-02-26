@@ -11,28 +11,29 @@ const projects = [
     title: "Lama Designs",
     category: "Interior · 2024",
     tag: "01",
-    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1400",
+    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800&q=70",
     accent: "#f59e0b",
   },
   {
     title: "Cyber Engine",
     category: "Web3 · 2024",
     tag: "02",
-    img: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&q=80&w=1400",
+    img: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&q=80&w=800&q=70",
     accent: "#818cf8",
   },
   {
     title: "Neon Velocity",
     category: "App Design · 2023",
     tag: "03",
-    img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1400",
+    img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800&q=70",
     accent: "#34d399",
   },
+
 ];
 
 // ADJUSTMENTS FOR BETTER SPACING
 const CARD_HEIGHT_VH = 48; // Percentage of viewport height
-const STACK_OFFSET = 60;   // Pixels visible at the top when cards stack
+// const STACK_OFFSET = window.innerWidth < 768 ? 40 : 60;  // Pixels visible at the top when cards stack
 
 export default function CardGridContainer() {
   const sectionRef = useRef();
@@ -42,7 +43,7 @@ export default function CardGridContainer() {
   useEffect(() => {
     const cards = cardRefs.current;
     const total = cards.length;
-    
+    const STACK_OFFSET = window.innerWidth < 768 ? 40 : 60;
     // Total scroll length relative to number of cards
     const scrollDistance = window.innerHeight * 0.8;
     const totalScroll = scrollDistance * total;
@@ -66,14 +67,14 @@ export default function CardGridContainer() {
         trigger: wrapperRef.current,
         start: () => `top+=${i * scrollDistance} top`,
         end: () => `top+=${(i + 1) * scrollDistance} top`,
-        scrub: 1,
+        scrub: .5,
         onUpdate: (self) => {
           const progress = self.progress;
           // Calculate final resting position in the stack
-          const finalY = i * STACK_OFFSET; 
+          const finalY = i * STACK_OFFSET;
           const startY = window.innerHeight;
           const currentY = gsap.utils.interpolate(startY, finalY, progress);
-          
+
           gsap.set(card, { y: currentY });
 
           // Background cards depth effect (scale and darken)
@@ -81,9 +82,9 @@ export default function CardGridContainer() {
             const depth = i - j + progress - 1;
             const scale = 1 - (depth * 0.04);
             const brightness = 1 - (depth * 0.3);
-            gsap.set(cards[j], { 
+            gsap.set(cards[j], {
               scale: Math.max(scale, 0.85),
-              filter: `brightness(${Math.max(brightness, 0.3)})` 
+              filter: `brightness(${Math.max(brightness, 0.3)})`
             });
           }
         }
@@ -121,7 +122,7 @@ export default function CardGridContainer() {
         .cg-header {
           width: 100%;
           max-width: 1000px;
-          padding: 140px 40px 40px; 
+          padding: clamp(80px, 15vh, 140px) 40px 30px;
           display: flex;
           justify-content: space-between;
           align-items: flex-end;
@@ -172,7 +173,7 @@ export default function CardGridContainer() {
           border-radius: 24px;
           overflow: hidden;
           border: 1px solid rgba(255,255,255,0.08);
-          box-shadow: 0 -20px 60px rgba(0,0,0,0.7);
+          box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
           transform-origin: top center;
         }
 
@@ -260,7 +261,7 @@ export default function CardGridContainer() {
           font-size: 20px;
           z-index: 3;
           background: rgba(255,255,255,0.03);
-          backdrop-filter: blur(10px);
+          will-change: transform;
           transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
         }
 
@@ -301,7 +302,7 @@ export default function CardGridContainer() {
 
       <div className="cg-wrapper" ref={wrapperRef}>
         <section className="cg-section" ref={sectionRef}>
-          
+
           <header className="cg-header">
             <h2 className="cg-title">Selected<br /><em>Impact</em>.</h2>
             <div className="cg-info">
@@ -312,16 +313,16 @@ export default function CardGridContainer() {
 
           <div className="cg-stage">
             {projects.map((p, i) => (
-              <div 
-                key={i} 
-                className="p-card" 
+              <div
+                key={i}
+                className="p-card"
                 ref={el => cardRefs.current[i] = el}
               >
                 <div className="p-img-container">
                   <img src={p.img} alt={p.title} className="p-img" />
                 </div>
                 <div className="p-overlay" />
-                
+
                 <div className="p-tag">{p.tag}</div>
 
                 <div className="p-content">

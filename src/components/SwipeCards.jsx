@@ -542,6 +542,33 @@ export default function SwipeCardsContainer() {
       accentColor: '#34d399',
       icon: '⬡',
     },
+        {
+      title: 'UI/UX Design',
+      description: 'We craft high-performance interfaces that bridge the gap between human intent and machine precision. Every pixel earns its place.',
+      subText: 'Phase 01 · Visual Engineering',
+      btnText: 'Explore Design',
+      gradient: 'radial-gradient(circle, #f59e0b, #ef4444)',
+      accentColor: '#f59e0b',
+      icon: '✦',
+    },
+    {
+      title: 'Motion Ops',
+      description: 'Bringing digital spaces to life with fluid scroll-driven narratives, GSAP engines, and interaction choreography that feels inevitable.',
+      subText: 'Phase 02 · Dynamic Interaction',
+      btnText: 'View Motion',
+      gradient: 'radial-gradient(circle, #6366f1, #ec4899)',
+      accentColor: '#818cf8',
+      icon: '◈',
+    },
+    {
+      title: 'Full Stack',
+      description: 'Scalable React and Next.js architectures forged for performance, global reach, and teams that ship fast without breaking things.',
+      subText: 'Phase 03 · Core Development',
+      btnText: 'Check Stack',
+      gradient: 'radial-gradient(circle, #10b981, #0ea5e9)',
+      accentColor: '#34d399',
+      icon: '⬡',
+    },
   ];
 
   return (
