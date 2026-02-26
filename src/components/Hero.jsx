@@ -6,12 +6,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 function BackgroundTextLayer({ text = "CORE ENGINE / V.4029-B", opacity = 0.04, speed = 55 }) {
-  const repeatedText = Array(60).fill(text).join("   ");
-  const [rows, setRows] = useState(18);
+  const repeatedText = Array(30).fill(text).join("   ");
+  const [rows, setRows] = useState(10);
   const bgRef = useRef(null);
   
   useEffect(() => {
-    const update = () => setRows(window.innerWidth < 640 ? 8 : 18);
+    const update = () => setRows(window.innerWidth < 640 ? 6 : 10);
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
@@ -127,7 +127,7 @@ export default function HeroV2() {
       trigger: heroRef.current,
       start: "top top",
       end: "bottom top",
-      scrub: 1.5,
+      scrub: 0.5,
       animation: gsap.to(".main-title", {
         yPercent: -30,
         scale: 0.92,
@@ -139,7 +139,7 @@ export default function HeroV2() {
       trigger: cardsRef.current,
       start: "top 80%",
       end: "bottom 20%",
-      scrub: 1.5,
+      scrub: 0.5,
       animation: gsap.to(".stat-card", {
         scale: 1.15,
         rotateX: 8,
@@ -155,7 +155,7 @@ export default function HeroV2() {
             trigger: heroRef.current,
             start: "top top",
             end: "bottom top",
-            scrub: 2
+            scrub: 0.7
         }
     });
     orbTl.to(".orb-left", { scale: 1.4, xPercent: -15, ease: "none" }, 0)
@@ -165,7 +165,7 @@ export default function HeroV2() {
       trigger: heroRef.current,
       start: "top top",
       end: "bottom top",
-      scrub: 2.5,
+      scrub: 0.8,
       animation: gsap.to(".floor", { yPercent: 40, rotation: 1, ease: "none" })
     });
 
@@ -209,7 +209,6 @@ export default function HeroV2() {
           from{opacity:0;transform:translateY(60px) scaleY(1.05);filter:blur(12px);}
           to{opacity:1;transform:translateY(0) scaleY(1);filter:blur(0);}
         }
-        @keyframes scanlines{to{background-position:0 8px;}}
         .hero-root{
           background:var(--bg);
           min-height:100svh; width:100%;
@@ -222,14 +221,20 @@ export default function HeroV2() {
         .orb-left{
           position:absolute; width:clamp(280px,50vw,600px); height:clamp(280px,50vw,600px);
           border-radius:50%; background:radial-gradient(circle,rgba(245,158,11,0.13) 0%,transparent 70%);
-          top:-10%;left:-10%; filter:blur(70px); animation:driftL 18s ease-in-out infinite alternate; pointer-events:none;
+          top:-10%;left:-10%; filter:blur(40px); animation:driftL 18s ease-in-out infinite alternate; pointer-events:none;
+          will-change: transform;
+transform: translateZ(0);
         }
         .orb-right{
           position:absolute; width:clamp(200px,40vw,500px); height:clamp(200px,40vw,500px);
           border-radius:50%; background:radial-gradient(circle,rgba(225,29,72,0.1) 0%,transparent 70%);
-          bottom:-5%;right:-8%; filter:blur(80px); animation:driftR 22s ease-in-out infinite alternate; pointer-events:none;
+          bottom:-5%;right:-8%; filter:blur(40px); animation:driftR 22s ease-in-out infinite alternate; pointer-events:none;
+          will-change: transform;
+transform: translateZ(0);
         }
         .floor{
+        will-change: transform;
+transform: translateZ(0);
           position:absolute; width:200%;height:70%; bottom:-10%;left:-50%;
           background-image: linear-gradient(to right,rgba(255,255,255,0.025) 1px,transparent 1px), linear-gradient(to bottom,rgba(255,255,255,0.025) 1px,transparent 1px);
           background-size:60px 60px; transform:rotateX(72deg); transform-origin:center bottom;
@@ -237,7 +242,7 @@ export default function HeroV2() {
         }
         .scan{
           position:absolute;inset:0; background:linear-gradient(180deg,transparent 0%,rgba(245,158,11,0.03) 49%,rgba(245,158,11,0.055) 50%,transparent 100%);
-          background-size:100% 8px; animation:scanlines 0.3s steps(1) infinite; pointer-events:none;opacity:0.5;
+          background-size:100% 8px; pointer-events:none;opacity:0.5;
         }
         .corner{position:absolute;width:18px;height:18px;pointer-events:none;}
         .corner.tl{top:16px;left:16px;border-top:1px solid rgba(245,158,11,0.35);border-left:1px solid rgba(245,158,11,0.35);}
@@ -285,7 +290,7 @@ export default function HeroV2() {
         .stat-card:hover .stat-rate{color:var(--accent);}
         .card-glow{
           position:absolute;inset:0;border-radius:16px; background:radial-gradient(circle at 50% 0%,var(--accent),transparent 60%);
-          opacity:0;transition:opacity 0.4s ease; pointer-events:none;mix-blend-mode:screen;filter:blur(20px);
+          opacity:0;transition:opacity 0.4s ease; pointer-events:none;mix-blend-mode:screen;filter:blur(10px);
         }
         .stat-rate{ font-family:'Bebas Neue',sans-serif; font-size:clamp(22px,4vw,34px); color:var(--bone);letter-spacing:0.08em;line-height:1; transition:color 0.3s ease; }
         .bottom-meta{ position:absolute; bottom:clamp(12px,3vw,32px); left:clamp(12px,3vw,32px); }

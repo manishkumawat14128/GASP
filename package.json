@@ -2,7 +2,7 @@
   "name": "gsap-react-animations",
   "private": true,
   "version": "0.0.0",
-  "homepage":"https://manishkumawat.github.io/GSAP/",
+  "homepage": "https://manishkumawat.github.io/GSAP/",
   "type": "module",
   "scripts": {
     "dev": "vite",
